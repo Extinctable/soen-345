@@ -16,3 +16,11 @@ Academic Project, Winter 2026, SOEN 345: Software Testing, Verification and Qual
 
 6. Click on the **Green Play Button** at the top of the editor to run the application
 <img width="707" height="163" alt="image" src="https://github.com/user-attachments/assets/33d84a26-8776-45e2-9886-aa90d7c6191d" />
+
+## Team GreenWhiteRed Members
+- Antonino Guarraci - 40264079
+- Benedetto Guidi - 40228072
+- Justin Lombardi - 40263452
+- Massimo Caruso - 40263285
+- Malcolm Arcand-Laliberté - 26334792
+- Vladimir Todorov - 40203170
