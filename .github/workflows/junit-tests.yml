@@ -1,0 +1,55 @@
+name: JUnit 5 Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./TicketReservationApp/gradlew
+
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > ./TicketReservationApp/local.properties
+
+      - name: Run JUnit 5 tests
+        working-directory: ./TicketReservationApp
+        run: ./gradlew test --no-daemon --stacktrace
+
+      - name: Generate JUnit 5 test report
+        if: always()
+        working-directory: ./TicketReservationApp
+        run: ./gradlew testDebugUnitTest --no-daemon
+
+      - name: Upload JUnit 5 test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: |
+            TicketReservationApp/app/build/test-results/
+            TicketReservationApp/app/build/reports/tests/
+
+      - name: Publish test results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: TicketReservationApp/app/build/test-results/testDebugUnitTest/*.xml
+          check_name: JUnit 5 Test Results
