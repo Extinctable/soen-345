@@ -2,12 +2,21 @@
     <string name="app_name">Ticket Reservation App</string>
     <string name="app_dashboard_title">Cloud Ticket Reservation</string>
     <string name="app_dashboard_subtitle">Customer and administrator workflows for registration, event discovery, reservations, cancellations, and digital confirmations.</string>
-    <string name="registration_title">1. Customer Registration</string>
-    <string name="search_title">2. Search and Filter Events</string>
-    <string name="events_title">3. Available Events</string>
-    <string name="reservations_title">4. Reservation Management</string>
-    <string name="confirmations_title">5. Confirmation Center</string>
-    <string name="admin_title">6. Administrator Console</string>
+    <string name="welcome_subtitle">Choose the workspace you want to open. Customer and administrator tools now live on separate pages.</string>
+    <string name="user_portal_title">Customer Portal</string>
+    <string name="user_portal_description">Register a customer, browse events, reserve tickets, manage reservations, and review confirmations.</string>
+    <string name="admin_portal_title">Administrator Console</string>
+    <string name="admin_portal_description">Create, update, and cancel events without mixing admin tools into the customer workflow.</string>
+    <string name="user_page_title">Customer Portal</string>
+    <string name="user_page_subtitle">Registration, event discovery, reservations, and confirmations for ticket buyers.</string>
+    <string name="admin_page_title">Administrator Console</string>
+    <string name="admin_page_subtitle">Manage the event catalog on a separate page from the customer workflow.</string>
+    <string name="registration_title">Customer Registration</string>
+    <string name="search_title">Search and Filter Events</string>
+    <string name="events_title">Available Events</string>
+    <string name="reservations_title">Reservation Management</string>
+    <string name="confirmations_title">Confirmation Center</string>
+    <string name="admin_title">Event Management</string>
     <string name="name_hint">Customer full name</string>
     <string name="contact_hint">Email address or phone number</string>
     <string name="search_hint">Search by event title</string>
@@ -26,6 +35,11 @@
     <string name="update_event_button">Update Selected Event</string>
     <string name="cancel_event_button">Cancel Selected Event</string>
     <string name="reset_form_button">Reset Admin Form</string>
+    <string name="open_user_page_button">Open Customer Portal</string>
+    <string name="open_admin_page_button">Open Admin Console</string>
+    <string name="back_to_welcome_button">Back to Welcome</string>
+    <string name="go_to_admin_button">Go to Admin</string>
+    <string name="go_to_user_button">Go to Customer</string>
     <string name="events_empty_state">No events match the current filters.</string>
     <string name="reservations_empty_state">No reservations have been created yet.</string>
     <string name="confirmations_empty_state">No confirmations have been issued yet.</string>
@@ -36,4 +50,5 @@
     <string name="confirmation_header_format">%1$s to %2$s on %3$s</string>
     <string name="admin_selection_prompt">Select an event to edit or cancel it.</string>
     <string name="admin_spinner_placeholder">Select active event</string>
+    <string name="admin_status_format">%1$d active event(s) in the catalog.</string>
 </resources>
