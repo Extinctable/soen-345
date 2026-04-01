@@ -33,4 +33,4 @@ replay_pid*
 *.keystore
 
 # Firebase config
-app/src/google-services.json
+app/src/debug/google-services.json
