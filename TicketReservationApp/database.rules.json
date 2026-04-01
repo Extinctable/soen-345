@@ -1,0 +1,61 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "ticketReservationApp": {
+      ".read": true,
+      ".write": false,
+
+      "events": {
+        ".write": true,
+        "$eventId": {
+          ".validate": "newData.hasChildren(['title','location','date','category','availableTickets','price','active']) && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('location').isString() && newData.child('location').val().length > 0 && newData.child('date').isString() && newData.child('date').val().matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && newData.child('category').isString() && newData.child('availableTickets').isNumber() && newData.child('availableTickets').val() >= 0 && newData.child('price').isNumber() && newData.child('price').val() > 0 && newData.child('active').isBoolean()"
+        }
+      },
+
+      "reservations": {
+        ".write": true,
+        "$reservationId": {
+          ".validate": "newData.hasChildren(['eventId','eventTitle','customerName','contactValue','channel','quantity','createdAt','status']) && newData.child('eventId').isString() && newData.child('eventTitle').isString() && newData.child('customerName').isString() && newData.child('contactValue').isString() && newData.child('channel').isString() && (newData.child('channel').val() == 'EMAIL' || newData.child('channel').val() == 'SMS') && newData.child('quantity').isNumber() && newData.child('quantity').val() > 0 && newData.child('createdAt').isString() && newData.child('status').isString()"
+        }
+      },
+
+      "confirmations": {
+        ".write": true,
+        "$confirmationId": {
+          ".validate": "newData.hasChildren(['channel','recipient','message','createdAt']) && newData.child('channel').isString() && (newData.child('channel').val() == 'EMAIL' || newData.child('channel').val() == 'SMS') && newData.child('recipient').isString() && newData.child('recipient').val().length > 0 && newData.child('message').isString() && newData.child('message').val().length > 0 && newData.child('createdAt').isString()"
+        }
+      },
+
+      "registeredUser": {
+        ".write": true,
+        ".validate": "!newData.exists() || (newData.hasChildren(['fullName','contactValue','contactMethod','registeredAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length > 0 && newData.child('contactValue').isString() && newData.child('contactValue').val().length > 0 && newData.child('contactMethod').isString() && (newData.child('contactMethod').val() == 'EMAIL' || newData.child('contactMethod').val() == 'SMS') && newData.child('registeredAt').isString())"
+      },
+
+      "users": {
+        ".read": true,
+        "$userId": {
+          ".write": "($userId == '123' && newData.exists() && newData.child('role').val() == 'ADMIN' && newData.child('password').val() == '123' && newData.child('email').val() == '' && newData.child('phone').val() == '') || (!data.exists() && newData.exists() && newData.child('role').val() == 'USER')",
+          ".validate": "(newData.hasChildren(['password','role','email','phone']) && newData.child('password').isString() && newData.child('role').isString() && newData.child('email').isString() && newData.child('phone').isString()) && (($userId == '123' && newData.child('password').val() == '123' && newData.child('role').val() == 'ADMIN' && newData.child('email').val() == '' && newData.child('phone').val() == '') || (newData.child('password').val().length > 0 && newData.child('role').val() == 'USER' && newData.child('email').val().matches(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/) && newData.child('phone').val().matches(/^\\+?[0-9]{10,15}$/)))"
+        }
+      }
+    },
+
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+
+    "registrations": {
+      "$eventId": {
+        "$uid": {
+          ".read": "auth != null && auth.uid == $uid",
+          ".write": "auth != null && auth.uid == $uid"
+        }
+      }
+    }
+  }
+}
