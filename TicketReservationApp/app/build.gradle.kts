@@ -38,7 +38,10 @@ android {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
             all {
-                it.useJUnitPlatform()
+                it.testLogging {
+                    events("passed", "skipped", "failed")
+                    showStandardStreams = true
+                }
             }
         }
     }
@@ -47,8 +50,11 @@ android {
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
-    
+
+    testImplementation("junit:junit:4.13.2")
+
     // JUnit 5 (Jupiter)
+    testImplementation(libs.robolectric)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)

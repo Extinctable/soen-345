@@ -36,10 +36,10 @@ public class UserPage extends BasePageActivity {
 
     private TextView currentUserText;
 
-    private TextInputEditText searchInput;
-    private TextInputEditText filterDateInput;
-    private TextInputEditText filterLocationInput;
-    private Spinner filterCategorySpinner;
+    public TextInputEditText searchInput;
+    public TextInputEditText filterDateInput;
+    public TextInputEditText filterLocationInput;
+    public Spinner filterCategorySpinner;
 
     private View eventsEmptyState;
     private View reservationsEmptyState;
@@ -131,7 +131,7 @@ public class UserPage extends BasePageActivity {
                 .show();
     }
 
-    private void sendEmailConfirmation(Reservation reservation) {
+    public void sendEmailConfirmation(Reservation reservation) {
         String email = resolveConfirmationEmail(reservation);
         if (TextUtils.isEmpty(email)) {
             showMessage("No valid email is attached to this customer account.");
@@ -149,7 +149,7 @@ public class UserPage extends BasePageActivity {
         showMessage("Mock SMS confirmation sent to " + destination + " for reservation " + reservation.getId() + ".");
     }
 
-    private String resolveConfirmationEmail(Reservation reservation) {
+    String resolveConfirmationEmail(Reservation reservation) {
         String sessionEmail = AuthSessionStore.currentEmail();
         if (isValidEmail(sessionEmail)) {
             return sessionEmail.trim();
@@ -169,7 +169,7 @@ public class UserPage extends BasePageActivity {
         return "";
     }
 
-    private boolean isValidEmail(String value) {
+    public boolean isValidEmail(String value) {
         return !TextUtils.isEmpty(value) && Patterns.EMAIL_ADDRESS.matcher(value.trim()).matches();
     }
 
@@ -285,7 +285,7 @@ public class UserPage extends BasePageActivity {
         }
     }
 
-    private EventFilter createFilterFromInputs() {
+    public EventFilter createFilterFromInputs() {
         LocalDate date = null;
         String rawDate = valueOf(filterDateInput);
         if (!TextUtils.isEmpty(rawDate)) {
