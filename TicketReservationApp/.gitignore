@@ -31,3 +31,6 @@ replay_pid*
 # Signing files
 *.jks
 *.keystore
+
+# Firebase config
+app/src/google-services.json
