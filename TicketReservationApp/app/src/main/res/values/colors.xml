@@ -2,13 +2,4 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="screen_background">#FFF5EF</color>
-    <color name="hero_background">#12343B</color>
-    <color name="hero_text">#FFF8F1</color>
-    <color name="hero_text_secondary">#D8E8E5</color>
-    <color name="card_background">#FFFFFFFF</color>
-    <color name="item_background">#FFF9F6</color>
-    <color name="card_stroke">#FFE0D6</color>
-    <color name="section_title">#1D2F36</color>
-    <color name="body_text">#5D6770</color>
 </resources>

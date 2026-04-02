@@ -4,12 +4,14 @@ plugins {
 
 android {
     namespace = "code.ticketreservationapp"
-    compileSdk = 33
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         applicationId = "code.ticketreservationapp"
-        minSdk = 26
-        targetSdk = 33
+        minSdk = 36
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -44,6 +46,8 @@ android {
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
     
     // JUnit 5 (Jupiter)
     testImplementation(libs.junit.jupiter)
@@ -57,7 +61,6 @@ dependencies {
     testImplementation(libs.mockito.junit.jupiter)
     
     // Android instrumentation tests
-    androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
