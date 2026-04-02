@@ -2,16 +2,23 @@ package code.ticketreservationapp;
 
 import android.os.Bundle;
 
-public class WelcomePage extends BasePageActivity {
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class WelcomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.welcome_page);
-
-        initializePage(R.id.main);
-
-        findViewById(R.id.openUserPageButton).setOnClickListener(view -> openPage(UserPage.class));
-        findViewById(R.id.openAdminPageButton).setOnClickListener(view -> openPage(AdminPage.class));
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 }
