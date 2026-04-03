@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -21,7 +22,7 @@ import code.ticketreservationapp.model.EventCategory;
 
 public class AdminPage extends BasePageActivity {
 
-    private static final String ADMIN_PROMPT = "Select an event to edit or cancel it.";
+    protected static final String ADMIN_PROMPT = "Select an event to edit or cancel it.";
     private static final String ADMIN_NONE = "No active event selected.";
 
     private Spinner adminEventSpinner;
@@ -29,10 +30,10 @@ public class AdminPage extends BasePageActivity {
     private TextView adminStatusText;
     private TextInputEditText adminTitleInput;
     private TextInputEditText adminLocationInput;
-    private TextInputEditText adminDateInput;
+    public TextInputEditText adminDateInput;
     private Spinner adminCategorySpinner;
-    private TextInputEditText adminTicketsInput;
-    private TextInputEditText adminPriceInput;
+    public TextInputEditText adminTicketsInput;
+    public TextInputEditText adminPriceInput;
 
     private Event selectedAdminEvent;
 
@@ -129,7 +130,7 @@ public class AdminPage extends BasePageActivity {
         }
     }
 
-    private void handleUpdateEvent() {
+    protected void handleUpdateEvent() {
         if (selectedAdminEvent == null) {
             showMessage(ADMIN_PROMPT);
             return;
@@ -153,7 +154,7 @@ public class AdminPage extends BasePageActivity {
         }
     }
 
-    private void handleCancelEvent() {
+    public void handleCancelEvent() {
         if (selectedAdminEvent == null) {
             showMessage(ADMIN_PROMPT);
             return;
@@ -245,7 +246,7 @@ public class AdminPage extends BasePageActivity {
         }
     }
 
-    private int parsePositiveInt(String value, String errorMessage) {
+    protected int parsePositiveInt(String value, String errorMessage) {
         int parsedValue = parseInt(value, errorMessage);
         if (parsedValue <= 0) {
             throw new IllegalArgumentException(errorMessage);
@@ -279,5 +280,10 @@ public class AdminPage extends BasePageActivity {
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException("Price must be a valid number.");
         }
+    }
+
+    @VisibleForTesting
+    public void setSelectedAdminEvent(Event event) {
+        selectedAdminEvent = event;
     }
 }
