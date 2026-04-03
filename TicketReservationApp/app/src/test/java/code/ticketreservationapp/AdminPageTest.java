@@ -64,7 +64,6 @@ public class AdminPageTest {
         when(mockEvent.getId()).thenReturn("1");
     }
 
-    /*
     // All-DU-Paths Test Case 1 for method handleCancelEvent
     // Path Nodes: [ 1, 3, 4, 6 ]
     @Test
@@ -113,7 +112,6 @@ public class AdminPageTest {
             assertEquals("error", e.getMessage());
         }
     }
-    */
 
     // Prime Path Coverage Test Case 1 for method handleUpdateEvent
     // Prime Path: [ 1, 2 ]
