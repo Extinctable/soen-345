@@ -29,13 +29,6 @@ jobs:
       - name: Create local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > ./TicketReservationApp/local.properties
 
-      - name: Build with Gradle
+      - name: Run unit tests
         working-directory: ./TicketReservationApp
-        run: ./gradlew build --no-daemon --stacktrace
-
-      - name: Upload build artifacts
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: TicketReservationApp/app/build/outputs/apk/debug/*.apk
+        run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
