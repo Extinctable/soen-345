@@ -2,30 +2,30 @@ package code.ticketreservationapp.auth;
 
 import java.util.List;
 
-final class AuthManager {
+public final class AuthManager {
 
     private static final String DEFAULT_ADMIN_USERNAME = "123";
     private static final String DEFAULT_ADMIN_PASSWORD = "123";
 
-    interface ResultCallback {
+    public interface ResultCallback {
         void onResult(boolean success, String message);
     }
 
     private final AuthUserStore userStore;
     private volatile AuthSession currentSession = AuthSession.loggedOut();
 
-    AuthManager(AuthUserStore userStore) {
+    public AuthManager(AuthUserStore userStore) {
         if (userStore == null) {
             throw new IllegalArgumentException("AuthUserStore cannot be null.");
         }
         this.userStore = userStore;
     }
 
-    static AuthManager createDefault() {
+    public static AuthManager createDefault() {
         return new AuthManager(new FirebaseAuthUserStore());
     }
 
-    void ensureDefaultAdminExists(ResultCallback callback) {
+    public void ensureDefaultAdminExists(ResultCallback callback) {
         userStore.fetchUser(DEFAULT_ADMIN_USERNAME, (success, user, message) -> {
             if (!success) {
                 callback.onResult(false, "Default admin check failed: " + message);
@@ -54,7 +54,7 @@ final class AuthManager {
         });
     }
 
-    void registerCustomer(String email, String phone, String password, ResultCallback callback) {
+    public void registerCustomer(String email, String phone, String password, ResultCallback callback) {
         String normalizedEmail = AuthInputNormalizer.normalizeEmail(email);
         String normalizedPhone = AuthInputNormalizer.normalizePhone(phone);
         String normalizedPassword = password == null ? "" : password;
@@ -114,7 +114,7 @@ final class AuthManager {
         });
     }
 
-    void loginCustomer(String identifier, String password, ResultCallback callback) {
+    public void loginCustomer(String identifier, String password, ResultCallback callback) {
         String normalizedIdentifier = identifier == null ? "" : identifier;
         String normalizedPassword = password == null ? "" : password;
         if (normalizedIdentifier.isEmpty() || normalizedPassword.isEmpty()) {
@@ -166,7 +166,7 @@ final class AuthManager {
         });
     }
 
-    void loginAdmin(String username, String password, ResultCallback callback) {
+    public void loginAdmin(String username, String password, ResultCallback callback) {
         String normalizedUsername = username == null ? "" : username;
         String normalizedPassword = password == null ? "" : password;
         if (normalizedUsername.isEmpty() || normalizedPassword.isEmpty()) {
@@ -201,31 +201,31 @@ final class AuthManager {
         });
     }
 
-    boolean isLoggedIn() {
+    public boolean isLoggedIn() {
         return currentSession.isLoggedIn();
     }
 
-    boolean isLoggedInAs(LoginRole role) {
+    public boolean isLoggedInAs(LoginRole role) {
         return currentSession.isLoggedInAs(role);
     }
 
-    LoginRole currentRole() {
+    public LoginRole currentRole() {
         return currentSession.getRole();
     }
 
-    String currentUsername() {
+    public String currentUsername() {
         return currentSession.getUsername();
     }
 
-    String currentEmail() {
+    public String currentEmail() {
         return currentSession.getEmail();
     }
 
-    String currentPhone() {
+    public String currentPhone() {
         return currentSession.getPhone();
     }
 
-    void logout() {
+    public void logout() {
         currentSession = AuthSession.loggedOut();
     }
 

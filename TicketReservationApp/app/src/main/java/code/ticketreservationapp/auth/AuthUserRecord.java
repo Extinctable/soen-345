@@ -1,6 +1,6 @@
 package code.ticketreservationapp.auth;
 
-final class AuthUserRecord {
+public final class AuthUserRecord {
 
     private final String username;
     private final String password;
@@ -8,7 +8,7 @@ final class AuthUserRecord {
     private final String email;
     private final String phone;
 
-    AuthUserRecord(String username, String password, LoginRole role, String email, String phone) {
+    public AuthUserRecord(String username, String password, LoginRole role, String email, String phone) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -16,23 +16,23 @@ final class AuthUserRecord {
         this.phone = phone;
     }
 
-    String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    LoginRole getRole() {
+    public LoginRole getRole() {
         return role;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    String getPhone() {
+    public String getPhone() {
         return phone;
     }
 }
