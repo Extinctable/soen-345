@@ -1,4 +1,4 @@
-package code.ticketreservationapp.auth;
+package code.ticketreservationapp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,6 +13,11 @@ import java.util.function.Consumer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+
+import code.ticketreservationapp.auth.AuthManager;
+import code.ticketreservationapp.auth.AuthUserRecord;
+import code.ticketreservationapp.auth.AuthUserStore;
+import code.ticketreservationapp.auth.LoginRole;
 
 public class AuthManagerTest {
 
@@ -207,20 +212,20 @@ public class AuthManagerTest {
         private AuthUserRecord lastSavedUser;
 
         @Override
-        public void fetchAllUsers(UsersCallback callback) {
+        public void fetchAllUsers(AuthUserStore.UsersCallback callback) {
             fetchAllUsersCalls++;
             List<AuthUserRecord> users = new ArrayList<>(usersByUsername.values());
             callback.onResult(true, users, "");
         }
 
         @Override
-        public void fetchUser(String username, UserCallback callback) {
+        public void fetchUser(String username, AuthUserStore.UserCallback callback) {
             fetchUserCalls++;
             callback.onResult(fetchUserSuccess, usersByUsername.get(username), fetchUserMessage);
         }
 
         @Override
-        public void saveUser(String username, AuthUserRecord user, OperationCallback callback) {
+        public void saveUser(String username, AuthUserRecord user, AuthUserStore.OperationCallback callback) {
             saveUserCalls++;
             lastSavedUsername = username;
             lastSavedUser = user;
