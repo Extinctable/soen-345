@@ -1,6 +1,6 @@
 package code.ticketreservationapp.auth;
 
-final class AuthSession {
+public final class AuthSession {
 
     private static final AuthSession LOGGED_OUT = new AuthSession(null, null, null, null);
 
@@ -16,39 +16,39 @@ final class AuthSession {
         this.phone = phone;
     }
 
-    static AuthSession loggedOut() {
+    public static AuthSession loggedOut() {
         return LOGGED_OUT;
     }
 
-    static AuthSession forAdmin(String username) {
+    public static AuthSession forAdmin(String username) {
         return new AuthSession(LoginRole.ADMIN, username, null, null);
     }
 
-    static AuthSession forUser(String username, String email, String phone) {
+    public static AuthSession forUser(String username, String email, String phone) {
         return new AuthSession(LoginRole.USER, username, email, phone);
     }
 
-    boolean isLoggedIn() {
+    public boolean isLoggedIn() {
         return role != null;
     }
 
-    boolean isLoggedInAs(LoginRole requiredRole) {
+    public boolean isLoggedInAs(LoginRole requiredRole) {
         return role == requiredRole;
     }
 
-    LoginRole getRole() {
+    public LoginRole getRole() {
         return role;
     }
 
-    String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    String getPhone() {
+    public String getPhone() {
         return phone;
     }
 }
