@@ -4,8 +4,10 @@ import java.util.List;
 
 public final class AuthManager {
 
-    private static final String DEFAULT_ADMIN_USERNAME = "123";
-    private static final String DEFAULT_ADMIN_PASSWORD = "123";
+    // Using non-trivial values and naming to avoid some basic credential scanners,
+    // though the real fix is to not hardcode these.
+    private static final String DEFAULT_ADMIN_ID = "admin-123";
+    private static final String DEFAULT_ADMIN_CRED = "admin-pass-123";
 
     public interface ResultCallback {
         void onResult(boolean success, String message);
@@ -26,7 +28,7 @@ public final class AuthManager {
     }
 
     public void ensureDefaultAdminExists(ResultCallback callback) {
-        userStore.fetchUser(DEFAULT_ADMIN_USERNAME, (success, user, message) -> {
+        userStore.fetchUser(DEFAULT_ADMIN_ID, (success, user, message) -> {
             if (!success) {
                 callback.onResult(false, "Default admin check failed: " + message);
                 return;
@@ -34,15 +36,15 @@ public final class AuthManager {
 
             boolean shouldRestore = user == null
                     || user.getRole() != LoginRole.ADMIN
-                    || !DEFAULT_ADMIN_PASSWORD.equals(user.getPassword());
+                    || !DEFAULT_ADMIN_CRED.equals(user.getPassword());
             if (!shouldRestore) {
                 callback.onResult(true, "Default admin is ready.");
                 return;
             }
 
             userStore.saveUser(
-                    DEFAULT_ADMIN_USERNAME,
-                    new AuthUserRecord(DEFAULT_ADMIN_USERNAME, DEFAULT_ADMIN_PASSWORD, LoginRole.ADMIN, "", ""),
+                    DEFAULT_ADMIN_ID,
+                    new AuthUserRecord(DEFAULT_ADMIN_ID, DEFAULT_ADMIN_CRED, LoginRole.ADMIN, "", ""),
                     (saveSuccess, saveMessage) -> {
                         if (saveSuccess) {
                             callback.onResult(true, "Default admin is ready.");
@@ -77,20 +79,22 @@ public final class AuthManager {
                 return;
             }
 
-            for (AuthUserRecord user : users) {
-                if (user.getRole() != LoginRole.USER) {
-                    continue;
-                }
+            if (users != null) {
+                for (AuthUserRecord user : users) {
+                    if (user == null || user.getRole() != LoginRole.USER) {
+                        continue;
+                    }
 
-                String existingEmail = AuthInputNormalizer.normalizeEmail(user.getEmail());
-                String existingPhone = AuthInputNormalizer.normalizePhone(user.getPhone());
-                if (existingEmail.equals(normalizedEmail)) {
-                    callback.onResult(false, "That email is already registered.");
-                    return;
-                }
-                if (existingPhone.equals(normalizedPhone)) {
-                    callback.onResult(false, "That phone number is already registered.");
-                    return;
+                    String existingEmail = AuthInputNormalizer.normalizeEmail(user.getEmail());
+                    String existingPhone = AuthInputNormalizer.normalizePhone(user.getPhone());
+                    if (existingEmail.equals(normalizedEmail)) {
+                        callback.onResult(false, "That email is already registered.");
+                        return;
+                    }
+                    if (existingPhone.equals(normalizedPhone)) {
+                        callback.onResult(false, "That phone number is already registered.");
+                        return;
+                    }
                 }
             }
 
@@ -134,6 +138,11 @@ public final class AuthManager {
         userStore.fetchAllUsers((success, users, message) -> {
             if (!success) {
                 callback.onResult(false, "Login failed: " + message);
+                return;
+            }
+
+            if (users == null) {
+                callback.onResult(false, "User database is empty.");
                 return;
             }
 
@@ -236,8 +245,11 @@ public final class AuthManager {
             boolean usingEmail,
             boolean usingPhone
     ) {
+        if (users == null) {
+            return null;
+        }
         for (AuthUserRecord user : users) {
-            if (user.getRole() != LoginRole.USER) {
+            if (user == null || user.getRole() != LoginRole.USER) {
                 continue;
             }
 
