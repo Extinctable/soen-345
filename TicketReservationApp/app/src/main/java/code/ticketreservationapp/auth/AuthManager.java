@@ -229,7 +229,7 @@ public final class AuthManager {
         currentSession = AuthSession.loggedOut();
     }
 
-    private AuthUserRecord findMatchingCustomer(
+    public AuthUserRecord findMatchingCustomer(
             List<AuthUserRecord> users,
             String normalizedEmail,
             String normalizedPhone,

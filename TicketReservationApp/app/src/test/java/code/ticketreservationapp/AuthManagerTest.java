@@ -2,9 +2,12 @@ package code.ticketreservationapp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,6 +172,58 @@ public class AuthManagerTest {
         assertEquals("customer-id", manager.currentUsername());
         assertEquals("customer@example.com", manager.currentEmail());
         assertEquals("5145550101", manager.currentPhone());
+    }
+
+    // Prime Path Coverage Test Case 1 for findMatchingCustomer
+    // Path: Empty list -> return null
+    @Test
+    @DisplayName("findMatchingCustomer returns null for empty user list")
+    public void findMatchingCustomer_emptyList_returnsNull() {
+        AuthUserRecord result = manager.findMatchingCustomer(
+                Collections.emptyList(),
+                "test@test.com",
+                "1234567890",
+                true,
+                false
+        );
+        assertNull(result);
+    }
+
+    // Prime Path Coverage Test Case 2 for findMatchingCustomer
+    // Path: List with only non-USER roles -> return null
+    @Test
+    @DisplayName("findMatchingCustomer ignores non-USER roles")
+    public void findMatchingCustomer_noCustomerInList_returnsNull() {
+        List<AuthUserRecord> users = Collections.singletonList(admin("admin", "pw"));
+        AuthUserRecord result = manager.findMatchingCustomer(
+                users,
+                "test@test.com",
+                "1234567890",
+                true,
+                false
+        );
+        assertNull(result);
+    }
+
+    // Prime Path Coverage Test Case 3 for findMatchingCustomer
+    // Path: Match found via email -> return user
+    @Test
+    @DisplayName("findMatchingCustomer matches by email")
+    public void findMatchingCustomer_matchByEmail_returnsUser() {
+        AuthUserRecord target = customer("id1", "pw", "match@test.com", "1112223333");
+        List<AuthUserRecord> users = new ArrayList<>();
+        users.add(admin("admin", "pw"));
+        users.add(target);
+        users.add(customer("id2", "pw", "other@test.com", "4445556666"));
+
+        AuthUserRecord result = manager.findMatchingCustomer(
+                users,
+                "match@test.com",
+                "0000000000",
+                true,
+                false
+        );
+        assertSame(target, result);
     }
 
     private CallbackResult capture(Consumer<AuthManager.ResultCallback> action) {
