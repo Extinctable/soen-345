@@ -120,6 +120,7 @@ jobs:
 
       - name: Build and Analyze
         working-directory: ./TicketReservationApp
-        run: ./gradlew sonar --no-daemon -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        # assembleDebug ensures .class files are generated for Sonar
+        run: ./gradlew assembleDebug sonar --no-daemon -Dsonar.token=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
