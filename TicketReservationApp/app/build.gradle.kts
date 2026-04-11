@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
 
     // Add the Google services Gradle plugin
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") apply false
 }
 
 android {
@@ -45,6 +45,10 @@ android {
             }
         }
     }
+}
+
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
 }
 
 dependencies {

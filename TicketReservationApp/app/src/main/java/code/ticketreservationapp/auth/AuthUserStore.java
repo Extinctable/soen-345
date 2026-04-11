@@ -2,17 +2,17 @@ package code.ticketreservationapp.auth;
 
 import java.util.List;
 
-interface AuthUserStore {
+public interface AuthUserStore {
 
-    interface UsersCallback {
+    public interface UsersCallback {
         void onResult(boolean success, List<AuthUserRecord> users, String message);
     }
 
-    interface UserCallback {
+    public interface UserCallback {
         void onResult(boolean success, AuthUserRecord user, String message);
     }
 
-    interface OperationCallback {
+    public interface OperationCallback {
         void onResult(boolean success, String message);
     }
 
